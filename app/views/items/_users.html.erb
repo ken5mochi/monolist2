@@ -1,0 +1,9 @@
+<% if users.any? %>
+  <% users.each do |user| %>
+    <a href="<%= user_path(user) %>">
+      <span class="gravatar">
+        <%= gravatar_for user , size: 20, alt: user.name %>
+      </span>
+    </a>
+  <% end %>
+<% end %>
