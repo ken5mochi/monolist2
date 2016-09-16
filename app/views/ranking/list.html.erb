@@ -1,0 +1,45 @@
+<% content_for :head do %>
+  <title><%= "ランキング(#{controller.action_name})" %> - monolist2 </title>
+  <description><%= "ランキング#{controller.action_name}" %> に関する情報です。</description>
+<% end %>
+
+<div class="container">
+  <div class="container-inner inner-default clearfix">
+
+    <div class="alert alert-info">
+      <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+      monolist2に登録されている商品の中で<%= controller.action_name %>された件数の多い商品ベスト10です。
+    </div>
+
+
+    <table class="table table-hover">
+    <% ranking_num = 0; previous_count = nil %>
+    <% @ranking.each do |id, count| %>
+      <tr>
+        <td>
+          <div class="ranking-place">
+            <% item = @items.find(id) %>
+            <% if previous_count != count %>
+              <%= ranking_num += 1 %>
+            <% else %>
+              ↑
+            <% end %>
+          </div>
+          <div class="ranking-point">
+            <%= pluralize count, 'point' %>
+          </div>
+        </td>
+        <td>
+          <%= image_tag item.small_image %>
+        </td>
+        <td>
+          <%= link_to item.title, item.detail_page_url %><br>
+          <%= item.description %>
+        </td>
+      </tr>
+      <% previous_count = count %>
+    <% end %>
+    </table>
+
+  </div>
+</div>
